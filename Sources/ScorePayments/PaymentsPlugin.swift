@@ -54,6 +54,7 @@ public struct PaymentsPlugin: ScorePlugin {
     /// Returns the payment provider for the given ID.
     ///
     /// - Parameter id: The provider identifier (e.g. "stripe", "revolut").
+    /// - Returns: The payment provider instance.
     /// - Throws: `PaymentError.providerNotFound` if no provider is configured with that ID.
     public func provider(_ id: String) throws -> any PaymentProvider {
         guard let providerConfig = config.providers[id] else {

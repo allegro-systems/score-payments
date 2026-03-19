@@ -14,7 +14,7 @@ struct PaymentsController: Controller {
 
     var routes: [Route] {
         [
-            Route(method: .post, path: "/webhook/:provider", handler: handleWebhook),
+            Route(method: .post, path: "/webhook/:provider", handler: handleWebhook)
         ]
     }
 

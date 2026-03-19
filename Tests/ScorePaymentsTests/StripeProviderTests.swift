@@ -13,7 +13,8 @@ struct StripeProviderTests {
     @Test("Verify webhook with valid signature")
     func validWebhookSignature() throws {
         let provider = makeProvider()
-        let payload = Data("""
+        let payload = Data(
+            """
             {"id":"evt_1","type":"charge.succeeded","data":{"object":{"id":"ch_1","amount":2000,"currency":"usd","status":"succeeded"}}}
             """.utf8)
 
@@ -131,7 +132,8 @@ struct StripeProviderTests {
     @Test("Webhook with charge.failed event type")
     func webhookChargeFailed() throws {
         let provider = makeProvider()
-        let payload = Data("""
+        let payload = Data(
+            """
             {"id":"evt_2","type":"charge.failed","data":{"object":{"id":"ch_2","amount":500,"currency":"usd","status":"failed"}}}
             """.utf8)
 
@@ -152,7 +154,8 @@ struct StripeProviderTests {
     @Test("Webhook with unknown event type returns .unknown")
     func webhookUnknownEvent() throws {
         let provider = makeProvider()
-        let payload = Data("""
+        let payload = Data(
+            """
             {"id":"evt_3","type":"some.unknown.event","data":{"object":{"id":"obj_1"}}}
             """.utf8)
 
@@ -180,27 +183,35 @@ struct StripeProviderTests {
 
     @Test("Charge status mapping")
     func chargeStatusMapping() throws {
-        let pending = try StripeProvider.parseCharge(from: Data("""
-            {"id":"ch_p","amount":100,"currency":"usd","status":"pending"}
-            """.utf8))
+        let pending = try StripeProvider.parseCharge(
+            from: Data(
+                """
+                {"id":"ch_p","amount":100,"currency":"usd","status":"pending"}
+                """.utf8))
         #expect(pending.status == .pending)
 
-        let failed = try StripeProvider.parseCharge(from: Data("""
-            {"id":"ch_f","amount":100,"currency":"usd","status":"failed"}
-            """.utf8))
+        let failed = try StripeProvider.parseCharge(
+            from: Data(
+                """
+                {"id":"ch_f","amount":100,"currency":"usd","status":"failed"}
+                """.utf8))
         #expect(failed.status == .failed)
     }
 
     @Test("Subscription status mapping")
     func subscriptionStatusMapping() throws {
-        let pastDue = try StripeProvider.parseSubscription(from: Data("""
-            {"id":"sub_pd","customer":"cus_1","status":"past_due","items":{"data":[{"price":{"unit_amount":100,"currency":"usd","recurring":{"interval":"month"}}}]},"current_period_start":1700000000,"current_period_end":1702592000,"metadata":{}}
-            """.utf8))
+        let pastDue = try StripeProvider.parseSubscription(
+            from: Data(
+                """
+                {"id":"sub_pd","customer":"cus_1","status":"past_due","items":{"data":[{"price":{"unit_amount":100,"currency":"usd","recurring":{"interval":"month"}}}]},"current_period_start":1700000000,"current_period_end":1702592000,"metadata":{}}
+                """.utf8))
         #expect(pastDue.status == .pastDue)
 
-        let trialing = try StripeProvider.parseSubscription(from: Data("""
-            {"id":"sub_t","customer":"cus_1","status":"trialing","items":{"data":[{"price":{"unit_amount":100,"currency":"usd","recurring":{"interval":"year"}}}]},"current_period_start":1700000000,"current_period_end":1702592000,"metadata":{}}
-            """.utf8))
+        let trialing = try StripeProvider.parseSubscription(
+            from: Data(
+                """
+                {"id":"sub_t","customer":"cus_1","status":"trialing","items":{"data":[{"price":{"unit_amount":100,"currency":"usd","recurring":{"interval":"year"}}}]},"current_period_start":1700000000,"current_period_end":1702592000,"metadata":{}}
+                """.utf8))
         #expect(trialing.status == .trialing)
         #expect(trialing.interval == .year)
     }

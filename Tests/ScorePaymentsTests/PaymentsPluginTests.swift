@@ -8,7 +8,7 @@ struct PaymentsPluginTests {
     @Test("Plugin has correct name")
     func pluginName() {
         let plugin = PaymentsPlugin(providers: [
-            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123"),
+            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123")
         ])
         #expect(plugin.name == "Payments")
     }
@@ -16,7 +16,7 @@ struct PaymentsPluginTests {
     @Test("Plugin registers controllers when providers are configured")
     func registersControllers() {
         let plugin = PaymentsPlugin(providers: [
-            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123"),
+            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123")
         ])
         #expect(!plugin.controllers.isEmpty)
     }
@@ -24,7 +24,7 @@ struct PaymentsPluginTests {
     @Test("Plugin provides provider access by ID")
     func providerAccess() throws {
         let plugin = PaymentsPlugin(providers: [
-            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123"),
+            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123")
         ])
         let provider = try plugin.provider("stripe")
         #expect(provider.id == "stripe")
@@ -33,7 +33,7 @@ struct PaymentsPluginTests {
     @Test("Plugin throws for unknown provider")
     func unknownProvider() {
         let plugin = PaymentsPlugin(providers: [
-            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123"),
+            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123")
         ])
         #expect(throws: PaymentError.self) {
             try plugin.provider("paypal")
@@ -43,7 +43,7 @@ struct PaymentsPluginTests {
     @Test("Plugin creates event streams")
     func eventStream() async {
         let plugin = PaymentsPlugin(providers: [
-            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123"),
+            .stripe(secretKey: "sk_test_123", webhookSecret: "whsec_123")
         ])
         // Should not crash — just verifies the method exists and returns a stream
         let _ = plugin.makeEventStream()
