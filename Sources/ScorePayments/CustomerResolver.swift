@@ -36,15 +36,15 @@ struct ScoreDataCustomerResolver: CustomerResolver {
     }
 
     func resolve(appUserId: String, provider: String) async throws -> String? {
-        try await store.get(key(appUserId: appUserId, provider: provider))
+        try await store.get(key: key(appUserId: appUserId, provider: provider))
     }
 
     func store(appUserId: String, provider: String, providerCustomerId: String) async throws {
-        try await store.set(key(appUserId: appUserId, provider: provider), value: providerCustomerId)
+        try await store.set(key: key(appUserId: appUserId, provider: provider), value: providerCustomerId)
     }
 
     func delete(appUserId: String, provider: String) async throws {
-        try await store.delete(key(appUserId: appUserId, provider: provider))
+        try await store.delete(key: key(appUserId: appUserId, provider: provider))
     }
 
     private func key(appUserId: String, provider: String) -> [String] {
