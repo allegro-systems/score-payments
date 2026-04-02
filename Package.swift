@@ -1,4 +1,4 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.3
 
 import PackageDescription
 
@@ -11,7 +11,7 @@ let package = Package(
         .library(name: "ScorePayments", targets: ["ScorePayments"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/allegro-systems/score.git", branch: "main"),
+        .package(path: "../../score"),
     ],
     targets: [
         .target(
